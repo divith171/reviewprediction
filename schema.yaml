@@ -1,1 +1,39 @@
-key: val
+COLUMNS:
+    order_item_id: int64  
+    price: float64
+    freight_value:  float64
+    product_category_name: object 
+    product_name_lenght: float64
+    product_description_lenght: float64
+    product_photos_qty: float64
+    product_weight_g: float64
+    product_length_cm: float64
+    product_height_cm: float64
+    product_width_cm: float64
+    seller_zip_code_prefix: int64  
+    seller_city: object 
+    seller_state: object 
+    order_status: object 
+    customer_zip_code_prefix: int64  
+    customer_city: object 
+    customer_state: object 
+    review_id : object 
+    review_score: int64  
+    review_comment_title: object 
+    review_comment_message: object 
+    review_creation_date: object 
+    review_answer_timestamp: object 
+    payment_sequential: int64  
+    payment_type: object 
+    payment_installments: int64  
+    payment_value: float64
+    purchase-delivery difference: int64  
+    estimated-actual delivery difference: int64  
+    price_category: object 
+    purchase_delivery_diff_per_price: float64
+    review_availability: int64 
+
+
+
+TARGET_COLUMN:
+  name: review_score
