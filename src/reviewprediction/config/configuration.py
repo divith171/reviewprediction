@@ -1,6 +1,6 @@
 from reviewprediction.constants import *
 from reviewprediction.utils.common import read_yaml, create_directories
-from reviewprediction.entity.config_entity import (DataIngestionConfig, DataValidationConfig)
+from reviewprediction.entity.config_entity import (DataIngestionConfig, DataValidationConfig,DataTransformationConfig,ModelTrainerConfig)
 
 
 class ConfigurationManager:
@@ -45,3 +45,38 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+    
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+        )
+
+        return data_transformation_config
+    
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        config = self.config.model_trainer
+        params = self.params.XGBClassifier
+        schema =  self.schema.TARGET_COLUMN
+
+        create_directories([config.root_dir])
+
+        model_trainer_config = ModelTrainerConfig(
+            root_dir=config.root_dir,
+            train_data_path = config.train_data_path,
+            test_data_path = config.test_data_path,
+            model_name = config.model_name,
+            n_estimators = params.n_estimators,
+            min_child_weight = params.min_child_weight,
+            max_depth = params.max_depth,
+            learning_rate = params.learning_rate,
+            target_column = schema.name
+            
+        )
+
+        return model_trainer_config
