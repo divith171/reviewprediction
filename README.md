@@ -48,3 +48,21 @@ Now,
 ```bash
 open up you local host and port
 ```
+
+### ml-flow
+
+### dagshub
+
+MLFLOW_TRACKING_URI=https://dagshub.com/divith171/reviewprediction.mlflow \
+MLFLOW_TRACKING_USERNAME=divith171 \
+MLFLOW_TRACKING_PASSWORD=f17ed95907e0d5c1e4b27b30354f6ed03187f1ba \
+python script.py
+
+run this as an env variable
+```bash
+export MLFLOW_TRACKING_URI=https://dagshub.com/divith171/reviewprediction.mlflow 
+export MLFLOW_TRACKING_USERNAME=divith171 
+export MLFLOW_TRACKING_PASSWORD=f17ed95907e0d5c1e4b27b30354f6ed03187f1ba 
+
+
+```

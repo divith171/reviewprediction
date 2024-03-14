@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/reviewprediction/mlruns/0/e6c7e0872b754dfda18381a735f68c93/artifacts
+end_time: 1710341394678
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e6c7e0872b754dfda18381a735f68c93
+run_name: fearless-quail-478
+run_uuid: e6c7e0872b754dfda18381a735f68c93
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1710341394450
+status: 3
+tags: []
+user_id: My Pc
