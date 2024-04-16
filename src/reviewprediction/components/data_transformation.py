@@ -11,7 +11,8 @@ from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import  StandardScaler
 import json
 from reviewprediction.entity.config_entity import DataTransformationConfig
-
+import pickle
+import joblib
 
 class DataTransformation:
     def __init__(self, config: DataTransformationConfig):
@@ -28,9 +29,39 @@ class DataTransformation:
                     f1 = frame[frame.iloc[:,1] == 0]
                     f2 = frame[frame.iloc[:,1] == 1]
                     global dict_frame, dict_f1, dict_f2
+                    
                     dict_frame = dict(frame.iloc[:,0].value_counts())
+                    
                     dict_f1 = dict(f1.iloc[:,0].value_counts())
+                    
                     dict_f2 = dict(f2.iloc[:,0].value_counts())
+
+                     # Save the dictionaries as pickle files
+                    pickle_path='artifacts'
+                    if os.path.exists(pickle_path + '/dict_frame_product_category.pkl'):
+                        with open(pickle_path + '/dict_frame_payment_sequential.pkl', 'wb') as f:
+                            pickle.dump(dict_frame, f)
+                    else:
+                         with open(pickle_path + '/dict_frame_product_category.pkl', 'wb') as f:
+                            pickle.dump(dict_frame, f)
+
+                    if os.path.exists(pickle_path + '/dict_f1_product_category.pkl'):
+                         with open(pickle_path + '/dict_f1_payment_sequential.pkl', 'wb') as f:
+                           pickle.dump(dict_f1, f)   
+                    
+                    else:   
+                         with open(pickle_path + '/dict_f1_product_category.pkl', 'wb') as f:
+                           pickle.dump(dict_f1, f)
+                    
+                    if os.path.exists(pickle_path + '/dict_f2_product_category.pkl'):
+                         with open(pickle_path + '/dict_f2_payment_sequential.pkl', 'wb') as f:
+                           pickle.dump(dict_f2, f)   
+                    
+                    else:   
+                         with open(pickle_path + '/dict_f2_product_category.pkl', 'wb') as f:
+                           pickle.dump(dict_f2, f)
+                    
+                    
                     state_0, state_1 = [],[],
                     for i in range(len(frame)):
                         if frame.iloc[:,1][i] == 0:
@@ -60,6 +91,7 @@ class DataTransformation:
 
             ohe_order_item = OneHotEncoder()
             ohe_order_item.fit(X_train['order_item_id'].values.reshape(-1,1))
+            joblib.dump(ohe_order_item, 'artifacts/ohe_order_item.pkl')
             X_train_order_item = ohe_order_item.transform(X_train['order_item_id'].values.reshape(-1,1)).toarray()
             X_test_order_item = ohe_order_item.transform(X_test['order_item_id'].values.reshape(-1,1)).toarray()
             X_train_resp_payment_seq = train_response(pd.concat([X_train['payment_sequential'], y_train], axis=1).reset_index(drop=True))
@@ -67,11 +99,13 @@ class DataTransformation:
 
             ohe_payment_type = OneHotEncoder()
             ohe_payment_type.fit(X_train['payment_type'].values.reshape(-1,1))
+            joblib.dump(ohe_payment_type, 'artifacts/ohe_payment_type.pkl')
             X_train_payment_type = ohe_payment_type.transform(X_train['payment_type'].values.reshape(-1,1)).toarray()
             X_test_payment_type = ohe_payment_type.transform(X_test['payment_type'].values.reshape(-1,1)).toarray()
 
             enc_price = OrdinalEncoder()
             enc_price.fit(X_train['price_category'].values.reshape(-1,1))
+            joblib.dump(enc_price, 'artifacts/enc_price.pkl')
             enc_price.categories_ = [np.array([ 'cheap', 'affordable', 'expensive'], dtype=object)]
             X_train_cat_price = enc_price.transform(X_train['price_category'].values.reshape(-1,1))
             X_test_cat_price = enc_price.transform(X_test['price_category'].values.reshape(-1,1))
@@ -113,10 +147,13 @@ class DataTransformation:
             extracted_test_reviews = [review[0] for review in encoded_test_reviews]
             X_test = X_test.assign(embedded_review_comment_message=extracted_test_reviews)
 
-
+            
             strn = StandardScaler()
             strn.fit(X_train[['price','freight_value','product_photos_qty','product_weight_g', 'product_length_cm',
                 'product_height_cm', 'product_width_cm', 'payment_value','purchase-delivery difference','estimated-actual delivery difference','purchase_delivery_diff_per_price']])
+            os.makedirs('artifacts', exist_ok=True)
+            joblib.dump(strn, 'artifacts/strn.pkl')
+            
             X_train_strn = strn.transform(X_train[['price','freight_value','product_photos_qty','product_weight_g', 'product_length_cm',
                 'product_height_cm', 'product_width_cm', 'payment_value','purchase-delivery difference','estimated-actual delivery difference','purchase_delivery_diff_per_price']])
             X_test_strn = strn.transform(X_test[['price','freight_value','product_photos_qty','product_weight_g', 'product_length_cm',

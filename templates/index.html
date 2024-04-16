@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Prediction</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .container {
+      text-align: center;
+    }
+  
+    .button-separate {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  
+    .button-separate button {
+      /* Add your button styles here */
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  
+    .button-separate button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Review Prediction</h1>
+    <form id="reviewForm" action="{{ url_for('predict') }}" method="POST">
+      <input type="number" name="order_item_id" placeholder="Order Item ID" required>
+      <input type="number" name="price" placeholder="Price" required>
+      <input type="number" name="freight_value" placeholder="Freight Value" required>
+      <select name="product_category_name" id="product_category_name" required>
+        <option value="" disabled selected>Product Category</option>
+        <option value="cool_stuff">Cool Stuff</option>
+        <option value="toys">Toys</option>
+      	<option value="tablets_printing_image">Tablets & Printing Image</option>
+        <option value="pet_shop">Pet Shop</option>
+        <option value="bed_bath_table">Bed & Bath Table</option>
+        <option value="furniture_decor">Furniture & Decor</option>
+        <option value="perfumery">Perfumery</option>
+        <option value="computers_accessories">Computers & Accessories</option>
+        <option value="housewares">Housewares</option>
+        <option value="stationery">Stationery</option>
+        <option value="garden_tools">Garden Tools</option>
+        <option value="sports_leisure">Sports & Leisure</option>
+        <option value="telephony">Telephony</option>
+        <option value="audio">Audio</option>
+        <option value="health_beauty">Health & Beauty</option>
+        <option value="baby">Baby</option>
+        <option value="costruction_tools_garden">Construction Tools & Garden</option>
+        <option value="watches_gifts">Watches & Gifts</option>
+        <option value="books_technical">Books Technical</option>
+        <option value="dvds_blu_ray">DVDs & Blu-Ray</option>
+        <option value="consoles_games">Consoles & Games</option>
+        <option value="food">Food</option>
+        <option value="fashion_bags_accessories">Fashion Bags & Accessories</option>
+        <option value="home_confort">Home Comfort</option>
+        <option value="furniture_living_room">Furniture Living Room</option>
+        <option value="home_comfort_2">Home Comfort 2</option>
+        <option value="musical_instruments">Musical Instruments</option>
+        <option value="auto">Auto</option>
+        <option value="office_furniture">Office Furniture</option>
+        <option value="home_construction">Home Construction</option>
+        <option value="construction_tools_lights">Construction Tools & Lights</option>
+        <option value="electronics">Electronics</option>
+        <option value="signaling_and_security">Signaling & Security</option>
+        <option value="cine_photo">Cine Photo</option>
+        <option value="construction_tools_construction">Construction Tools & Construction</option>
+        <option value="fixed_telephony">Fixed Telephony</option>
+        <option value="diapers_and_hygiene">Diapers & Hygiene</option>
+        <option value="fashion_male_clothing">Fashion Male Clothing</option>
+        <option value="small_appliances">Small Appliances</option>
+        <option value="industry_commerce_and_business">Industry Commerce & Business</option>
+        <option value="construction_tools_safety">Construction Tools Safety</option>
+        <option value="fashion_sport">Fashion Sport</option>
+        <option value="luggage_accessories">Luggage Accessories</option>
+        <option value="market_place">Market Place</option>
+        <option value="costruction_tools_tools">Construction Tools & Tools</option>
+        <option value="home_appliances">Home Appliances</option>
+        <option value="agro_industry_and_commerce">Agro Industry & Commerce</option>
+        <option value="air_conditioning">Air Conditioning</option>
+        <option value="art">Art</option>
+        <option value="la_cuisine">La Cuisine</option>
+        <option value="small_appliances_home_oven_and_coffee">Small Appliances Home Oven & Coffee</option>
+        <option value="kitchen_dining_laundry_garden_furniture">Kitchen Dining Laundry Garden Furniture</option>
+        <option value="books_general_interest">Books General Interest</option>
+        <option value="home_appliances_2">Home Appliances 2</option>
+        <option value="food_drink">Food Drink</option>
+        <option value="music">Music</option>
+        <option value="furniture_bedroom">Furniture Bedroom</option>
+        <option value="fashion_shoes">Fashion Shoes</option>
+        <option value="drinks">Drinks</option>
+        <option value="christmas_supplies">Christmas Supplies</option>
+        <option value="party_supplies">Party Supplies</option>
+        <option value="furniture_mattress_and_upholstery">Furniture Mattress And Upholstery</option>
+        <option value="cds_dvds_musicals">CDs DVDs Musicals</option>
+        <option value="security_and_services">Security And Services</option>
+        <option value="fashion_childrens_clothes">Fashion Children's Clothes</option>
+        <option value="fashio_female_clothing">Fashion Female Clothing</option>
+        <option value="computers">Computers</option>
+        <option value="fashion_underwear_beach">Fashion Underwear & Beach</option>
+        <option value="books_imported">Books Imported</option>
+        <option value="arts_and_craftmanship">Arts And Craftsmanship</option>
+        <option value="flowers">Flowers</option>
+      </select>
+      <input type="number" name="product_name_length" placeholder="Product Name Length" required>
+      <input type="number" name="product_description_length" placeholder="Product Description Length" required>
+      <input type="number" name="product_photos_qty" placeholder="Product Photos Quantity" required>
+      <input type="number" name="product_weight_g" placeholder="Product Weight (g)" required>
+      <input type="number" name="product_length_cm" placeholder="Product Length (cm)" required>
+      <input type="number" name="product_height_cm" placeholder="Product Height (cm)" required>
+      <input type="number" name="product_width_cm" placeholder="Product Width (cm)" required>
+      <input type="number" name="seller_zip_code_prefix" placeholder="Seller Zip Code Prefix" required>
+      <input type="text" name="seller_city" placeholder="Seller City" required>
+      <select name="seller_state" id="seller_state" required>
+        <option value="" disabled selected>Seller State</option>
+        <option value="AC">Acre</option>
+        <option value="AL">Alagoas</option>
+        <option value="AM">Amazonas</option>
+        <option value="AP">Amapá</option>
+        <option value="BA">Bahia</option>
+        <option value="CE">Ceará</option>
+        <option value="DF">Distrito Federal</option>
+        <option value="ES">Espírito Santo</option>
+        <option value="GO">Goiás</option>
+        <option value="MA">Maranhão</option>
+        <option value="MG">Minas Gerais</option>
+        <option value="MS">Mato Grosso do Sul</option>
+        <option value="MT">Mato Grosso</option>
+        <option value="PA">Pará</option>
+        <option value="PB">Paraíba</option>
+        <option value="PE">Pernambuco</option>
+        <option value="PI">Piauí</option>
+        <option value="PR">Paraná</option>
+        <option value="RJ">Rio de Janeiro</option>
+        <option value="RN">Rio Grande do Norte</option>
+        <option value="RO">Rondônia</option>
+        <option value="RR">Roraima</option>
+        <option value="RS">Rio Grande do Sul</option>
+        <option value="SC">Santa Catarina</option>
+        <option value="SE">Sergipe</option>
+        <option value="SP">São Paulo</option>
+        <option value="TO">Tocantins</option>
+      </select>
+      <input type="text" name="order_status" placeholder="Order Status" required>
+      <input type="number" name="customer_zip_code_prefix" placeholder="Customer Zip Code Prefix" required>
+      <input type="text" name="customer_city" placeholder="Customer City" required>
+      <select name="customer_state" id="customer_state" required>
+        <option value="" disabled selected>Customer State</option>
+        <option value="AC">Acre</option>
+        <option value="AL">Alagoas</option>
+        <option value="AM">Amazonas</option>
+        <option value="AP">Amapá</option>
+        <option value="BA">Bahia</option>
+        <option value="CE">Ceará</option>
+        <option value="DF">Distrito Federal</option>
+        <option value="ES">Espírito Santo</option>
+        <option value="GO">Goiás</option>
+        <option value="MA">Maranhão</option>
+        <option value="MG">Minas Gerais</option>
+        <option value="MS">Mato Grosso do Sul</option>
+        <option value="MT">Mato Grosso</option>
+        <option value="PA">Pará</option>
+        <option value="PB">Paraíba</option>
+        <option value="PE">Pernambuco</option>
+        <option value="PI">Piauí</option>
+        <option value="PR">Paraná</option>
+        <option value="RJ">Rio de Janeiro</option>
+        <option value="RN">Rio Grande do Norte</option>
+        <option value="RO">Rondônia</option>
+        <option value="RR">Roraima</option>
+        <option value="RS">Rio Grande do Sul</option>
+        <option value="SC">Santa Catarina</option>
+        <option value="SE">Sergipe</option>
+        <option value="SP">São Paulo</option>
+        <option value="TO">Tocantins</option>
+      </select>
+      <input type="text" name="review_id" placeholder="Review ID" required>
+      <input type="text" name="review_comment_title" placeholder="Review Comment Title" title="Please enter in Portuguese" required>
+      <input type="text" name="review_comment_message" placeholder="Review Comment Message" title="Please enter in Portuguese" required>
+      <input type="text" name="review_creation_date" placeholder="Review Creation Date" title="Please enter in format YY:DD:MM HH:MM:SS" required>
+      <input type="text" name="review_answer_timestamp" placeholder="Review Answer Timestamp" title="Please enter in format YY:DD:MM HH:MM:SS" required>
+      <input type="number" name="payment_sequential" placeholder="Payment Sequential" required>
+      <select name="payment_type" id="payment_type" required>
+        <option value="" disabled selected>Payment type</option>
+        <option value="credit_card">Credit Card</option>
+        <option value="boleto">Boleto</option>
+        <option value="voucher">Voucher</option>
+        <option value="debit_card">Debit Card</option>
+      </select>
+      <input type="number" name="payment_installments" placeholder="Payment Installments" required>
+      <input type="number" name="payment_value" placeholder="Payment Value" required>
+      <input type="number" name="purchase-delivery difference" placeholder="Purchase-Delivery Difference" title="The number of days between the time of purchase and delivery" required>
+      <input type="number" name="estimated-actual delivery difference" placeholder="Estimated Actual Delivery Difference" title="The delay or the cut-down in the number of days actually required for the delivery"  required>
+      <select name="price_category" id="price_category" required>
+        <option value="" disabled selected>Price category</option>
+        <option value="cheap">Cheap</option>
+        <option value="affordable">Affordable</option>
+        <option value="expensive">Expensive</option>
+      </select>
+      <input type="number" name="purchase_delivery_diff_per_price" placeholder="Purchase Delivery Difference per Price" required>
+      <input type="number" name="review_availability" placeholder="Review Availability" title="put 1 if review available otherwise put 0" required>
+    </form>
+    <div class="button-separate">
+      <button form="reviewForm" type="submit" name="action" value="predict">Predict Review</button>
+    </div>
+    <div class="button-separate">
+      <form action="{{ url_for('training') }}" method="GET">
+        <button type="submit" name="action" value="train">Train Model</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
