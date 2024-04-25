@@ -11,4 +11,7 @@ types-PyYAML
 Flask
 Flask-Cors
 flask-sse
+sentence-transformers
+spacy
+xgboost
 -e .
