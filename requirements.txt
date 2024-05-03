@@ -11,7 +11,9 @@ types-PyYAML
 Flask
 Flask-Cors
 flask-sse
+mlflow
 sentence-transformers
-spacy
+spacy>=3.0,<4.0
+pt-core-news-sm==3.1.0
 xgboost
 -e .
