@@ -13,6 +13,7 @@ app = Flask(__name__) # initializing a Flask app
 main_py_timestamps = []  # List to store the timestamps when main.py was triggered
 
 
+
 @app.route('/', methods=['GET'])  # route to display the home page
 def homePage():
     return render_template("index.html")
